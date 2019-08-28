@@ -30,7 +30,7 @@ export type Message = {
   data: any,
 }
 
-export const useWebSocket = (url: string, options: Options = DEFAULT_OPTIONS): [(message:any) => void, Message, ReadyStateEnum] => {
+export const useWebSocket = (url: string, options: Options = DEFAULT_OPTIONS): [(message:any) => void, Message, ReadyStateEnum, any] => {
   const [ lastMessage, setLastMessage ] = useState<Message | null>(null);
   const [ readyState, setReadyState ] = useState<ReadyStateState>({});
   const webSocketRef = useRef<any>(null);
@@ -72,5 +72,5 @@ export const useWebSocket = (url: string, options: Options = DEFAULT_OPTIONS): [
 
   const readyStateFromUrl = readyState[convertedUrl] !== undefined ? readyState[convertedUrl] : READY_STATE_CONNECTING;
 
-  return [ sendMessage, lastMessage, readyStateFromUrl ];
+  return [ sendMessage, lastMessage, readyStateFromUrl, webSocketRef.current ];
 };
